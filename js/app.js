@@ -1,7 +1,18 @@
 /*
  * Create a list that holds all of your cards
  */
+const cardList = document.getElementsByClassName('card');
+console.log(cardList);
 
+/* Deck of Cards
+*/
+const cardDeck = document.getElementsByClassName('deck');
+
+/* Moves
+*/
+let moves = 0;
+let movesCounter = document.getElementsByClassName('moves');
+console.log(movesCounter);
 
 /*
  * Display the cards on the page
