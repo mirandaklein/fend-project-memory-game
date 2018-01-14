@@ -2,12 +2,13 @@
  * Create a list that holds all of your cards
  */
 const cardList = document.getElementsByClassName('card');
-console.log(cardList);
+
+
 
 /* Deck of Cards
  */
 const cardDeck = document.getElementsByClassName('deck');
-
+console.log(cardDeck);
 /* Moves
  */
 let moves = 0;
@@ -38,23 +39,51 @@ function shuffle(array) {
 }
 
 
-        
-
-
-
-
-
-
-
 
 
 //Click Events
+let cardOne = null;
+let cardTwo = null;
 
-for (card of cardList) {  
-    card.addEventListener('click', function(){  
-        console.log(this["children"][0].className + ' clicked');
+for (card of cardList) {
+    card.addEventListener('click', function () {
+        if (!cardOne) {
+            cardOne = this;
+            this.classList.toggle('open');
+            this.classList.toggle('show');
+        } else {
+            cardTwo = this;
+            this.classList.toggle('open');
+            this.classList.toggle('show');
+            if (compareClassNames(cardOne.children[0].className,
+                    cardTwo.children[0].className)) {
+                cardOne.classList.toggle("match");
+                cardTwo.classList.toggle("match");
+                cardOne = null;
+                cardTwo = null;
+
+            } else {
+                setTimeout(function () {
+                    cardOne.classList.remove("open");
+                    cardOne.classList.remove("show");
+                    cardTwo.classList.remove("open");
+                    cardTwo.classList.remove("show");
+                    cardOne = null;
+                    cardTwo = null;
+                }, 1000);
+            }
+
+        }
     })
 };
+
+function compareClassNames(c1, c2) {
+    return c1 === c2;
+};
+
+
+
+
 
 
 
