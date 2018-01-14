@@ -5,14 +5,14 @@ const cardList = document.getElementsByClassName('card');
 console.log(cardList);
 
 /* Deck of Cards
-*/
+ */
 const cardDeck = document.getElementsByClassName('deck');
 
 /* Moves
-*/
+ */
 let moves = 0;
 let movesCounter = document.getElementsByClassName('moves');
-console.log(movesCounter);
+//console.log(movesCounter);
 
 /*
  * Display the cards on the page
@@ -23,7 +23,8 @@ console.log(movesCounter);
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
-    var currentIndex = array.length, temporaryValue, randomIndex;
+    var currentIndex = array.length,
+        temporaryValue, randomIndex;
 
     while (currentIndex !== 0) {
         randomIndex = Math.floor(Math.random() * currentIndex);
@@ -35,6 +36,28 @@ function shuffle(array) {
 
     return array;
 }
+
+
+        
+
+
+
+
+
+
+
+
+
+//Click Events
+
+for (card of cardList) {  
+    card.addEventListener('click', function(){  
+        console.log(this["children"][0].className + ' clicked');
+    })
+};
+
+
+
 
 
 /*
