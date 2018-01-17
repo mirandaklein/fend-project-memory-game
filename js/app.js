@@ -1,26 +1,28 @@
 /*
  * Create a list that holds all of your cards
  */
-const cardList = document.getElementsByClassName('card');
-
+let cardList = document.getElementsByClassName('card');
+let cards = [...cardList];
+//console.log(cards);
 
 
 /* Deck of Cards
  */
-const cardDeck = document.getElementsByClassName('deck');
-console.log(cardDeck);
+let cardDeck = document.getElementById('deck-of-cards');
+
 /* Moves
  */
 let moves = 0;
 let movesCounter = document.getElementsByClassName('moves');
 //console.log(movesCounter);
-
+var openCards = [];
 /*
  * Display the cards on the page
  *   - shuffle the list of cards using the provided "shuffle" method below
  *   - loop through each card and create its HTML
  *   - add each card's HTML to the page
  */
+
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
@@ -36,50 +38,79 @@ function shuffle(array) {
     }
 
     return array;
-}
-
-
-
-
-//Click Events
-let cardOne = null;
-let cardTwo = null;
-
-for (card of cardList) {
-    card.addEventListener('click', function () {
-        if (!cardOne) {
-            cardOne = this;
-            this.classList.toggle('open');
-            this.classList.toggle('show');
-        } else {
-            cardTwo = this;
-            this.classList.toggle('open');
-            this.classList.toggle('show');
-            if (compareClassNames(cardOne.children[0].className,
-                    cardTwo.children[0].className)) {
-                cardOne.classList.toggle("match");
-                cardTwo.classList.toggle("match");
-                cardOne = null;
-                cardTwo = null;
-
-            } else {
-                setTimeout(function () {
-                    cardOne.classList.remove("open");
-                    cardOne.classList.remove("show");
-                    cardTwo.classList.remove("open");
-                    cardTwo.classList.remove("show");
-                    cardOne = null;
-                    cardTwo = null;
-                }, 1000);
-            }
-
-        }
-    })
 };
+
+function startGame() {
+    let shuffledCards = shuffle(cards);
+    for (let c of cards) {
+        c.remove();
+    }
+
+    for (let c of shuffledCards) {
+        cardDeck.appendChild(c);
+    }
+
+};
+startGame();
+
+const restartGame = document.getElementsByClassName('restart');
+restartGame[0].children[0].addEventListener('click', startGame);
+
 
 function compareClassNames(c1, c2) {
     return c1 === c2;
 };
+
+function showCards() {
+    let cardOne = null;
+    let cardTwo = null;
+
+    for (card of cardList) {
+        card.addEventListener('click', function () {
+            if (!cardOne) {
+                cardOne = this;
+                this.classList.toggle('open');
+                this.classList.toggle('show');
+                openCards.push(this);
+            } else {
+                cardTwo = this;
+                this.classList.toggle('open');
+                this.classList.toggle('show');
+                openCards.push(this);
+                if (compareClassNames(cardOne.children[0].className,
+                        cardTwo.children[0].className)) {
+                    cardOne.classList.toggle("match");
+                    cardTwo.classList.toggle("match");
+                    console.log(openCards);
+                    cardOne = null;
+                    cardTwo = null;
+                } else {
+                    setTimeout(function () {
+                        cardOne.classList.remove("open");
+                        cardOne.classList.remove("show");
+                        cardTwo.classList.remove("open");
+                        cardTwo.classList.remove("show");
+                        openCards.pop();
+                        openCards.pop();
+                        cardOne = null;
+                        cardTwo = null;
+                    }, 350);
+
+                }
+                if (openCards.length === 16) {
+                    alert('win');
+                }
+            }
+        })
+    }
+};
+showCards();
+
+
+
+
+
+
 
 
 
