@@ -1,3 +1,11 @@
+//Allows for console messages to check for bugs
+const DEBUG = true;
+
+function logMessage(msg) {
+    if (DEBUG)
+        console.log(msg);
+};
+
 /*
  * Create a list that holds all of your cards
  */
@@ -7,11 +15,6 @@ let cards = [...cardList];
 logMessage(cards);
 
 
-const DEBUG = false;
-function logMessage(msg) {
-    if (DEBUG)
-        console.log(msg);
-}
 
 
 /* Deck of Cards
@@ -23,6 +26,7 @@ let cardDeck = document.getElementById('deck-of-cards');
 let moves = 0;
 let movesCounter = document.getElementsByClassName('moves');
 
+//Creating stars list
 let stars = document.getElementsByClassName('stars');
 
 
@@ -78,13 +82,21 @@ function compareClassNames(c1, c2) {
     return c1 === c2;
 };
 
+let firstClick = true;
+
 function showCards() {
     let cardOne = null;
     let cardTwo = null;
 
     for (card of cardList) {
         card.addEventListener('click', function () {
+            if (firstClick) {
+                add();
+            }
+            firstClick = false;
+
             addMoves();
+
             if (!cardOne) {
                 cardOne = this;
                 this.classList.toggle('open');
@@ -115,8 +127,9 @@ function showCards() {
 
                 }
                 if (openCards.length === 16) {
-                    alert('win');
+                    displayResults();
                 }
+
             }
         })
     }
@@ -124,7 +137,7 @@ function showCards() {
 
 
 function addMoves() {
-    let numMovesTillDecrement = 3;
+    let numMovesTillDecrement = 15;
     moves++;
     movesCounter[0].innerText = moves;
     if (moves % numMovesTillDecrement == 0) {
@@ -142,15 +155,77 @@ function removeStar() {
     starToSetEmptyIndex--;
 };
 
+
+// Stopwatch function from http://jsfiddle.net/oukjfavu/
+let timer = document.getElementById("timer");
+logMessage(timer);
+let seconds = 0,
+    minutes = 0,
+    hours = 0;
+
+function add() {
+    seconds++;
+    if (seconds >= 60) {
+        seconds = 0;
+        minutes++;
+        if (minutes >= 60) {
+            minutes = 0;
+            hours++;
+        }
+    }
+    timer.innerHTML = (hours ? (hours > 9 ? hours : "0" + hours) : "00") +
+        ":" + (minutes ? (minutes > 9 ? minutes : "0" + minutes) : "00") +
+        ":" + (seconds > 9 ? seconds : "0" + seconds);
+
+    startTimer();
+}
+
+function startTimer() {
+    t = setTimeout(add, 1000);
+}
+
 showCards();
 
 
 
-//Add Timer
 
-//Add win screen
+//Modal from w3schools
+var modal = document.getElementById('myModal');
 
 
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function () {
+    modal.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function (event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
+
+var playAgain = document.getElementById('playAgain');
+console.log(playAgain);
+playAgain.onclick = function () {
+    window.location.reload();
+}
+
+
+//Display Results
+
+let gameResults = document.getElementById('results');
+let displayResults = function () {
+    clearTimeout(t);
+    let tResults = timer.innerHTML;
+    let mResults = moves;
+    let sResults = document.getElementsByClassName("fa-star").length;
+    gameResults.innerHTML = `Took ${tResults} with ${mResults} Moves and ${sResults} Stars.`;
+    modal.style.display = 'block';
+}
 
 
 
