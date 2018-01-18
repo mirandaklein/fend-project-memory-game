@@ -7,11 +7,12 @@
 
 ## Instructions
 
-The starter project has some HTML and CSS styling to display a static version of the Memory Game project. You'll need to convert this project from a static project to an interactive one. This will require modifying the HTML and CSS files, but primarily the JavaScript file.
+The goal of this game is to get 8 matches of 16 cards.
 
-To get started, open `js/app.js` and start building out the app's functionality
-
-For specific, detailed instructions, look at the project instructions in the [Udacity Classroom](https://classroom.udacity.com/me).
+Click on a card to open.
+When two cards match, they will remain open.
+Once all cards are matched, either restart or close the game.
+Try multiple times to get a better star score and time!
 
 ## Contributing
 
