@@ -1,9 +1,17 @@
 /*
  * Create a list that holds all of your cards
  */
+
 let cardList = document.getElementsByClassName('card');
 let cards = [...cardList];
-//console.log(cards);
+logMessage(cards);
+
+
+const DEBUG = false;
+function logMessage(msg) {
+    if (DEBUG)
+        console.log(msg);
+}
 
 
 /* Deck of Cards
@@ -14,8 +22,8 @@ let cardDeck = document.getElementById('deck-of-cards');
  */
 let moves = 0;
 let movesCounter = document.getElementsByClassName('moves');
-console.log(movesCounter);
 
+let stars = document.getElementsByClassName('stars');
 
 
 var openCards = [];
@@ -56,10 +64,16 @@ function startGame() {
 };
 startGame();
 
+
+
+//Restarts game and shuffles
 const restartGame = document.getElementsByClassName('restart');
-restartGame[0].children[0].addEventListener('click', startGame);
+restartGame[0].children[0].addEventListener('click', function () {
+    window.location.reload();
+});
 
 
+//Compares cards to find matching
 function compareClassNames(c1, c2) {
     return c1 === c2;
 };
@@ -70,7 +84,6 @@ function showCards() {
 
     for (card of cardList) {
         card.addEventListener('click', function () {
-            console.log(this);
             addMoves();
             if (!cardOne) {
                 cardOne = this;
@@ -86,7 +99,6 @@ function showCards() {
                         cardTwo.children[0].className)) {
                     cardOne.classList.toggle("match");
                     cardTwo.classList.toggle("match");
-                    console.log(openCards);
                     cardOne = null;
                     cardTwo = null;
                 } else {
@@ -112,29 +124,31 @@ function showCards() {
 
 
 function addMoves() {
+    let numMovesTillDecrement = 3;
     moves++;
     movesCounter[0].innerText = moves;
-    if (moves === 1){
+    if (moves % numMovesTillDecrement == 0) {
         removeStar();
     }
 
 };
 
 //Currently removeStar is running before 5 clicks can be accumulated
+let starToSetEmptyIndex = 2;
 
-function removeStar(){
-    document.getElementById('starsTwo').classList.remove('fa-star')
+function removeStar() {
+    stars[0].children[starToSetEmptyIndex].children[0].classList.remove("fa-star");
+    stars[0].children[starToSetEmptyIndex].children[0].classList.add("fa-star-o");
+    starToSetEmptyIndex--;
 };
-    showCards();
 
-    
-
+showCards();
 
 
 
+//Add Timer
 
-
-
+//Add win screen
 
 
 
@@ -143,13 +157,18 @@ function removeStar(){
 
 
 
-    /*
-     * set up the event listener for a card. If a card is clicked:
-     *  - display the card's symbol (put this functionality in another function that you call from this one)
-     *  - add the card to a *list* of "open" cards (put this functionality in another function that you call from this one)
-     *  - if the list already has another card, check to see if the two cards match
-     *    + if the cards do match, lock the cards in the open position (put this functionality in another function that you call from this one)
-     *    + if the cards do not match, remove the cards from the list and hide the card's symbol (put this functionality in another function that you call from this one)
-     *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
-     *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
-     */
+
+
+
+
+
+/*
+ * set up the event listener for a card. If a card is clicked:
+ *  - display the card's symbol (put this functionality in another function that you call from this one)
+ *  - add the card to a *list* of "open" cards (put this functionality in another function that you call from this one)
+ *  - if the list already has another card, check to see if the two cards match
+ *    + if the cards do match, lock the cards in the open position (put this functionality in another function that you call from this one)
+ *    + if the cards do not match, remove the cards from the list and hide the card's symbol (put this functionality in another function that you call from this one)
+ *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
+ *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
+ */
