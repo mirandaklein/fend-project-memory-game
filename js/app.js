@@ -96,7 +96,7 @@ function showCards() {
             }
             firstClick = false;
 
-            addMoves();
+            
 
             if (!cardOne) {
                 cardOne = this;
@@ -108,6 +108,7 @@ function showCards() {
                 this.classList.toggle('open');
                 this.classList.toggle('show');
                 openCards.push(this);
+                addMoves();
                 if (compareClassNames(cardOne.children[0].className,
                         cardTwo.children[0].className)) {
                     cardOne.classList.toggle("match");
@@ -136,7 +137,7 @@ function showCards() {
     }
 };
 
-
+//Adds moves when a card is clicked
 function addMoves() {
     let numMovesTillDecrement = 15;
     moves++;
@@ -147,7 +148,7 @@ function addMoves() {
 
 };
 
-//Currently removeStar is running before 5 clicks can be accumulated
+//Removes current stars and adds empty stars as moves increment
 let starToSetEmptyIndex = 2;
 
 function removeStar() {
